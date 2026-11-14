@@ -1,0 +1,87 @@
+name: Build DSH Mobile APK
+on:
+  workflow_dispatch:
+    inputs:
+      source_zip_url:
+        description: 官方完整源码包(含 710MB 固定离线输入)URL
+        required: true
+        default: https://github.com/DSH-APP/DSHA/releases/download/v0.2.1-rc.2/DSHA-0.2.1-rc.2-20261022.2100-source.zip
+        type: string
+      source_zip_sha256:
+        description: 上述源码包的 SHA-256
+        required: true
+        default: ef134fe8713bfa4d6cf3bdea883be1591246d4b78ace16bd924f6d739188425a
+        type: string
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - name: Checkout (our customizations)
+        uses: actions/checkout@v4
+
+      - name: Download official source bundle (with locked inputs)
+        run: |
+          set -euo pipefail
+          curl -fL --retry 3 -o src.zip "${{ inputs.source_zip_url }}"
+          echo "${{ inputs.source_zip_sha256 }}  src.zip" | sha256sum -c -
+          mkdir -p upstream
+          unzip -q src.zip -d upstream
+          SRC="$(find upstream -maxdepth 1 -mindepth 1 -type d | head -1)"
+          echo "SRC=$SRC" >> "$GITHUB_ENV"
+          echo "source root: $SRC"
+          ls "$SRC" | head
+
+      - name: Apply DSH Mobile customizations + bundle sync engine
+        run: |
+          set -euo pipefail
+          python3 "$GITHUB_WORKSPACE/tools/apply-dsh-mobile.py" "$SRC" "$GITHUB_WORKSPACE/sync/sync.mjs"
+
+      - name: Resolve toolchain versions (from the project itself)
+        id: toolchain
+        run: |
+          cd "$SRC"
+          python3 tools/ci-toolchain.py --github-output
+          echo "--- values ---"
+          python3 tools/ci-toolchain.py
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ steps.toolchain.outputs.java }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.toolchain.outputs.node }}
+
+      - name: Android SDK + NDK
+        run: |
+          set -euo pipefail
+          cd "$SRC"
+          platform=$(python3 tools/ci-toolchain.py --field androidPlatform)
+          buildtools=$(python3 tools/ci-toolchain.py --field buildTools)
+          ndk=$(python3 tools/ci-toolchain.py --field ndk)
+          yes | sdkmanager --licenses > /dev/null || true
+          sdkmanager "platforms;$platform" "build-tools;$buildtools" "ndk;$ndk"
+
+      - name: Build installable debug APK
+        run: |
+          set -euo pipefail
+          cd "$SRC"
+          chmod +x gradlew
+          ./gradlew :app:assembleStandardDebug --no-daemon --stacktrace
+
+      - name: Upload APK
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: DSH-Mobile-debug-apk
+          path: |
+            ${{ env.SRC }}/app/build/outputs/apk/standard/debug/*.apk
+            ${{ env.SRC }}/app/build/outputs/apk/*/debug/*.apk
+          if-no-files-found: error
+          retention-days: 30
