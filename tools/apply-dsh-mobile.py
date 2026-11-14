@@ -39,6 +39,22 @@ if force_sdk:
         changed.append(f"sdk->{force_sdk}")
 bg.write_text(g, encoding="utf-8")
 
+# 2b) 关闭自动更新（默认不检查 + 启动不主动检查）
+cs = src / "app/src/main/java/com/deepseekharness/app/core/ConfigStore.java"
+if cs.is_file():
+    t = cs.read_text(encoding="utf-8")
+    t2 = t.replace("return flag(Constants.KEY_CHECK_UPDATE, true);",
+                   "return flag(Constants.KEY_CHECK_UPDATE, false);")
+    if t2 != t:
+        cs.write_text(t2, encoding="utf-8"); changed.append("autoUpdate-check-off")
+ma = src / "app/src/main/java/com/deepseekharness/app/ui/MainActivity.java"
+if ma.is_file():
+    t = ma.read_text(encoding="utf-8")
+    t2 = t.replace("startupUpdates.checkOnStartup(config.isCheckUpdate());",
+                   "startupUpdates.checkOnStartup(false);")
+    if t2 != t:
+        ma.write_text(t2, encoding="utf-8"); changed.append("autoUpdate-startup-off")
+
 # 3) 内置同步引擎（默认不放进 assets，避免触发运行时资产清单校验失败）
 #    需要随包时设 BUNDLE_SYNC=1
 if os.environ.get("BUNDLE_SYNC") == "1" and sync and sync.is_file():
