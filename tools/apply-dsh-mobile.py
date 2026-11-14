@@ -35,4 +35,14 @@ if sync and sync.is_file():
     (dst_dir / "sync.mjs").write_bytes(sync.read_bytes())
     changed.append("bundled assets/dsh-sync/sync.mjs")
 
-print("APPLIED:", changed if changed else "(nothing — check source layout)")
+if not strings.is_file() or not bg.is_file():
+    print(f"::error::工程根不正确：{src} 下找不到 app/src/main/res/values/strings.xml 或 app/build.gradle")
+    sys.exit(2)
+if "app_name -> DSH Mobile" not in changed:
+    print("::error::app_name 未改成功（strings.xml 里没匹配到 DSHA）")
+    sys.exit(3)
+if "applicationId -> com.dshmobile.app" not in changed:
+    print("::error::applicationId 未改成功（build.gradle 里没匹配到 dsh.android.client）")
+    sys.exit(4)
+
+print("APPLIED:", changed)

@@ -27,12 +27,23 @@ jobs:
           set -euo pipefail
           curl -fL --retry 3 -o src.zip "${{ inputs.source_zip_url }}"
           echo "${{ inputs.source_zip_sha256 }}  src.zip" | sha256sum -c -
-          mkdir -p upstream
+          rm -rf upstream && mkdir -p upstream
           unzip -q src.zip -d upstream
-          SRC="$(find upstream -maxdepth 1 -mindepth 1 -type d | head -1)"
-          echo "SRC=$SRC" >> "$GITHUB_ENV"
-          echo "source root: $SRC"
-          ls "$SRC" | head
+          # 官方源码包可能是「平铺」也可能是「带一层目录」，用 settings.gradle 定位真正的工程根
+          ROOT=""
+          if [ -f upstream/settings.gradle ]; then
+            ROOT="upstream"
+          else
+            for d in upstream/*/; do
+              if [ -f "${d}settings.gradle" ]; then ROOT="${d%/}"; break; fi
+            done
+          fi
+          if [ -z "$ROOT" ]; then
+            echo "::error::无法定位工程根(settings.gradle 未找到)"; find upstream -maxdepth 3 -name settings.gradle; exit 1
+          fi
+          echo "SRC=$ROOT" >> "$GITHUB_ENV"
+          echo "source root: $ROOT"
+          ls "$ROOT" | head
 
       - name: Apply DSH Mobile customizations + bundle sync engine
         run: |

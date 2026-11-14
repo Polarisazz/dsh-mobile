@@ -1,0 +1,173 @@
+﻿2026-11-14T05:34:27.4578536Z Current runner version: '2.338.2'
+2026-11-14T05:34:27.4615963Z ##[group]Runner Image Provisioner
+2026-11-14T05:34:27.4617502Z Hosted Compute Agent
+2026-11-14T05:34:27.4618656Z Version: 20261103.629
+2026-11-14T05:34:27.4620077Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-14T05:34:27.4621447Z Build Date: 2026-11-03T17:26:59Z
+2026-11-14T05:34:27.4622626Z Worker ID: {65a4e36e-9860-4b4b-9166-ffa5c363d464}
+2026-11-14T05:34:27.4623934Z Region: eastus
+2026-11-14T05:34:27.4624954Z Cloud: Azure
+2026-11-14T05:34:27.4625876Z ##[endgroup]
+2026-11-14T05:34:27.4628273Z ##[group]Operating System
+2026-11-14T05:34:27.4629602Z Ubuntu
+2026-11-14T05:34:27.4630766Z 24.04.5
+2026-11-14T05:34:27.4631723Z LTS
+2026-11-14T05:34:27.4632588Z ##[endgroup]
+2026-11-14T05:34:27.4633681Z ##[group]Runner Image
+2026-11-14T05:34:27.4634731Z Image: ubuntu-24.04
+2026-11-14T05:34:27.4635868Z Version: 20261111.370.1
+2026-11-14T05:34:27.4638195Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261111.370/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-14T05:34:27.4642142Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261111.370
+2026-11-14T05:34:27.4643944Z ##[endgroup]
+2026-11-14T05:34:27.4646091Z ##[group]GITHUB_TOKEN Permissions
+2026-11-14T05:34:27.4649039Z Contents: read
+2026-11-14T05:34:27.4650417Z Metadata: read
+2026-11-14T05:34:27.4651398Z ##[endgroup]
+2026-11-14T05:34:27.4654512Z Secret source: Actions
+2026-11-14T05:34:27.4656116Z Cache mode: write
+2026-11-14T05:34:27.4657583Z Prepare workflow directory
+2026-11-14T05:34:27.5155109Z Prepare all required actions
+2026-11-14T05:34:27.5227092Z Getting action download info
+2026-11-14T05:34:27.8128800Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-14T05:34:27.9682693Z Download action repository 'actions/setup-java@v4' (SHA:cf277c60eb25467037889841efdb72551f06f6c3)
+2026-11-14T05:34:28.2794059Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-14T05:34:28.3824973Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-14T05:34:28.6239021Z Complete job name: build
+2026-11-14T05:34:28.7222623Z ##[group]Run actions/checkout@v4
+2026-11-14T05:34:28.7223626Z with:
+2026-11-14T05:34:28.7224149Z   repository: Polarisazz/dsh-mobile
+2026-11-14T05:34:28.7228210Z   token: ***
+2026-11-14T05:34:28.7228746Z   ssh-strict: true
+2026-11-14T05:34:28.7229445Z   ssh-user: git
+2026-11-14T05:34:28.7229983Z   persist-credentials: true
+2026-11-14T05:34:28.7230561Z   clean: true
+2026-11-14T05:34:28.7231064Z   sparse-checkout-cone-mode: true
+2026-11-14T05:34:28.7231689Z   fetch-depth: 1
+2026-11-14T05:34:28.7232185Z   fetch-tags: false
+2026-11-14T05:34:28.7232687Z   show-progress: true
+2026-11-14T05:34:28.7233215Z   lfs: false
+2026-11-14T05:34:28.7233696Z   submodules: false
+2026-11-14T05:34:28.7234211Z   set-safe-directory: true
+2026-11-14T05:34:28.7234797Z   allow-unsafe-pr-checkout: false
+2026-11-14T05:34:28.7235716Z ##[endgroup]
+2026-11-14T05:34:29.2709705Z Syncing repository: Polarisazz/dsh-mobile
+2026-11-14T05:34:29.2714645Z ##[group]Getting Git version info
+2026-11-14T05:34:29.2744844Z Working directory is '/home/runner/work/dsh-mobile/dsh-mobile'
+2026-11-14T05:34:29.2747916Z [command]/usr/bin/git version
+2026-11-14T05:34:29.2967012Z git version 2.56.1
+2026-11-14T05:34:29.2997203Z ##[endgroup]
+2026-11-14T05:34:29.3025737Z Temporarily overriding HOME='/home/runner/work/_temp/3eabfccc-5bc3-4f92-9c74-d5c8190eb194' before making global git config changes
+2026-11-14T05:34:29.3031201Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-14T05:34:29.3046421Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dsh-mobile/dsh-mobile
+2026-11-14T05:34:29.3159956Z Deleting the contents of '/home/runner/work/dsh-mobile/dsh-mobile'
+2026-11-14T05:34:29.3164669Z ##[group]Initializing the repository
+2026-11-14T05:34:29.3167810Z [command]/usr/bin/git init /home/runner/work/dsh-mobile/dsh-mobile
+2026-11-14T05:34:29.3324151Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-14T05:34:29.3330999Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-14T05:34:29.3335896Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-14T05:34:29.3368225Z hint: call:
+2026-11-14T05:34:29.3370435Z hint:
+2026-11-14T05:34:29.3372723Z hint: 	git config --global init.defaultBranch <name>
+2026-11-14T05:34:29.3375331Z hint:
+2026-11-14T05:34:29.3377812Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-14T05:34:29.3382279Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-14T05:34:29.3385541Z hint:
+2026-11-14T05:34:29.3387313Z hint: 	git branch -m <name>
+2026-11-14T05:34:29.3389583Z hint:
+2026-11-14T05:34:29.3395571Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-14T05:34:29.3400532Z Initialized empty Git repository in /home/runner/work/dsh-mobile/dsh-mobile/.git/
+2026-11-14T05:34:29.3408111Z [command]/usr/bin/git remote add origin https://github.com/Polarisazz/dsh-mobile
+2026-11-14T05:34:29.3491697Z ##[endgroup]
+2026-11-14T05:34:29.3512620Z ##[group]Disabling automatic garbage collection
+2026-11-14T05:34:29.3534122Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-14T05:34:29.3541942Z ##[endgroup]
+2026-11-14T05:34:29.3544637Z ##[group]Setting up auth
+2026-11-14T05:34:29.3547418Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-14T05:34:29.3632842Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-14T05:34:29.4418227Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-14T05:34:29.4476075Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-14T05:34:29.4922670Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-14T05:34:29.5036580Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-14T05:34:29.5364428Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-14T05:34:29.5424508Z ##[endgroup]
+2026-11-14T05:34:29.5427099Z ##[group]Fetching the repository
+2026-11-14T05:34:29.5442146Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +b94807e955d2a118cab131664168f29546d8a0f2:refs/remotes/origin/main
+2026-11-14T05:34:29.7757804Z From https://github.com/Polarisazz/dsh-mobile
+2026-11-14T05:34:29.7761701Z  * [new ref]         b94807e955d2a118cab131664168f29546d8a0f2 -> origin/main
+2026-11-14T05:34:29.7793260Z ##[endgroup]
+2026-11-14T05:34:29.7796527Z ##[group]Determining the checkout info
+2026-11-14T05:34:29.7800370Z ##[endgroup]
+2026-11-14T05:34:29.7802414Z [command]/usr/bin/git sparse-checkout disable
+2026-11-14T05:34:29.7892365Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-14T05:34:29.8095332Z ##[group]Checking out the ref
+2026-11-14T05:34:29.8098463Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-11-14T05:34:29.8101933Z Switched to a new branch 'main'
+2026-11-14T05:34:29.8112717Z branch 'main' set up to track 'origin/main'.
+2026-11-14T05:34:29.8117855Z ##[endgroup]
+2026-11-14T05:34:29.8185109Z [command]/usr/bin/git log -1 --format=%H
+2026-11-14T05:34:29.8209814Z b94807e955d2a118cab131664168f29546d8a0f2
+2026-11-14T05:34:29.8531093Z ##[group]Run set -euo pipefail
+2026-11-14T05:34:29.8532420Z [36;1mset -euo pipefail[0m
+2026-11-14T05:34:29.8534993Z [36;1mcurl -fL --retry 3 -o src.zip "https://github.com/DSH-APP/DSHA/releases/download/v0.2.1-rc.2/DSHA-0.2.1-rc.2-20261022.2100-source.zip"[0m
+2026-11-14T05:34:29.8538973Z [36;1mecho "ef134fe8713bfa4d6cf3bdea883be1591246d4b78ace16bd924f6d739188425a  src.zip" | sha256sum -c -[0m
+2026-11-14T05:34:29.8541528Z [36;1mmkdir -p upstream[0m
+2026-11-14T05:34:29.8542647Z [36;1munzip -q src.zip -d upstream[0m
+2026-11-14T05:34:29.8544285Z [36;1mSRC="$(find upstream -maxdepth 1 -mindepth 1 -type d | head -1)"[0m
+2026-11-14T05:34:29.8545985Z [36;1mecho "SRC=$SRC" >> "$GITHUB_ENV"[0m
+2026-11-14T05:34:29.8547237Z [36;1mecho "source root: $SRC"[0m
+2026-11-14T05:34:29.8548354Z [36;1mls "$SRC" | head[0m
+2026-11-14T05:34:29.8574318Z shell: /usr/bin/bash -e {0}
+2026-11-14T05:34:29.8575411Z ##[endgroup]
+2026-11-14T05:34:29.8780884Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-11-14T05:34:29.8784259Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-11-14T05:34:29.8785635Z 
+2026-11-14T05:34:30.0312163Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-11-14T05:34:30.0315521Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-11-14T05:34:30.5254795Z 
+2026-11-14T05:34:31.5400224Z  15  677M   15  102M    0     0   157M      0  0:00:04 --:--:--  0:00:04  157M
+2026-11-14T05:34:32.5253785Z  50  677M   50  339M    0     0   204M      0  0:00:03  0:00:01  0:00:02  234M
+2026-11-14T05:34:32.9804941Z  82  677M   82  556M    0     0   209M      0  0:00:03  0:00:02  0:00:01  226M
+2026-11-14T05:34:32.9810243Z 100  677M  100  677M    0     0   218M      0  0:00:03  0:00:03 --:--:--  234M
+2026-11-14T05:34:33.5819085Z src.zip: OK
+2026-11-14T05:34:37.2256594Z source root: upstream/bug
+2026-11-14T05:34:37.2276793Z adb-直连排查报告.md
+2026-11-14T05:34:37.2279452Z adb只读白名单过宽分析.md
+2026-11-14T05:34:37.2280187Z dsha-bug-report.md
+2026-11-14T05:34:37.2280858Z write工具悬空链接bug报告.md
+2026-11-14T05:34:37.2281573Z 会话损坏修复记录.md
+2026-11-14T05:34:37.2282298Z 备份恢复机制-通用缺陷清单.md
+2026-11-14T05:34:37.2333147Z ##[group]Run set -euo pipefail
+2026-11-14T05:34:37.2333484Z [36;1mset -euo pipefail[0m
+2026-11-14T05:34:37.2333981Z [36;1mpython3 "$GITHUB_WORKSPACE/tools/apply-dsh-mobile.py" "$SRC" "$GITHUB_WORKSPACE/sync/sync.mjs"[0m
+2026-11-14T05:34:37.2354123Z shell: /usr/bin/bash -e {0}
+2026-11-14T05:34:37.2354384Z env:
+2026-11-14T05:34:37.2354578Z   SRC: upstream/bug
+2026-11-14T05:34:37.2354794Z ##[endgroup]
+2026-11-14T05:34:37.2622218Z APPLIED: ['bundled assets/dsh-sync/sync.mjs']
+2026-11-14T05:34:37.3093112Z ##[group]Run cd "$SRC"
+2026-11-14T05:34:37.3093420Z [36;1mcd "$SRC"[0m
+2026-11-14T05:34:37.3093737Z [36;1mpython3 tools/ci-toolchain.py --github-output[0m
+2026-11-14T05:34:37.3094093Z [36;1mecho "--- values ---"[0m
+2026-11-14T05:34:37.3094378Z [36;1mpython3 tools/ci-toolchain.py[0m
+2026-11-14T05:34:37.3114074Z shell: /usr/bin/bash -e {0}
+2026-11-14T05:34:37.3114350Z env:
+2026-11-14T05:34:37.3114548Z   SRC: upstream/bug
+2026-11-14T05:34:37.3114785Z ##[endgroup]
+2026-11-14T05:34:37.3300927Z python3: can't open file '/home/runner/work/dsh-mobile/dsh-mobile/upstream/bug/tools/ci-toolchain.py': [Errno 2] No such file or directory
+2026-11-14T05:34:37.3341729Z ##[error]Process completed with exit code 2.
+2026-11-14T05:34:37.3558617Z Post job cleanup.
+2026-11-14T05:34:37.4560268Z [command]/usr/bin/git version
+2026-11-14T05:34:37.4661864Z git version 2.56.1
+2026-11-14T05:34:37.4726896Z Temporarily overriding HOME='/home/runner/work/_temp/92f39dfa-5100-44f0-997f-ac0329694c91' before making global git config changes
+2026-11-14T05:34:37.4730782Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-14T05:34:37.4732425Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dsh-mobile/dsh-mobile
+2026-11-14T05:34:37.4834196Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-14T05:34:37.4911885Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-14T05:34:37.5297358Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-14T05:34:37.5332196Z http.https://github.com/.extraheader
+2026-11-14T05:34:37.5354727Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-14T05:34:37.5501378Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-14T05:34:37.5921550Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-14T05:34:37.5961414Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-14T05:34:37.6377171Z Cleaning up orphan processes
+2026-11-14T05:34:37.6747734Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
