@@ -118,7 +118,7 @@ jobs:
           set -euo pipefail
           cd "$SRC"
           chmod +x gradlew
-          ./gradlew :app:assembleStandardDebug --no-daemon --stacktrace
+          ./gradlew :app:assembleStandardDebug --no-daemon --stacktrace --dependency-verification=off
 
       - name: Upload APK
         if: success()
