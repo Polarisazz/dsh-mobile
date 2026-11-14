@@ -69,15 +69,26 @@ jobs:
         with:
           node-version: ${{ steps.toolchain.outputs.node }}
 
-      - name: Android SDK + NDK
+      - name: Set up Android SDK command-line tools
+        uses: android-actions/setup-android@v3
+
+      - name: Android SDK + NDK (with 37→36 fallback)
         run: |
           set -euo pipefail
           cd "$SRC"
-          platform=$(python3 tools/ci-toolchain.py --field androidPlatform)
+          platform=$(python3 tools/ci-toolchain.py --field androidPlatform)   # e.g. android-37.0
           buildtools=$(python3 tools/ci-toolchain.py --field buildTools)
           ndk=$(python3 tools/ci-toolchain.py --field ndk)
           yes | sdkmanager --licenses > /dev/null || true
-          sdkmanager "platforms;$platform" "build-tools;$buildtools" "ndk;$ndk"
+          if sdkmanager "platforms;$platform" "build-tools;$buildtools" "ndk;$ndk"; then
+            echo "installed requested platform $platform"
+          else
+            echo "::warning::$platform 不可用，回退 android-36 并把 compileSdk/targetSdk 降到 36"
+            sdkmanager "platforms;android-36" "build-tools;$buildtools" || { echo "::error::build-tools 安装失败"; exit 1; }
+            sdkmanager "ndk;$ndk" || echo "::warning::NDK 安装失败(继续，仅影响部分 native 检查)"
+            FORCE_SDK=36 python3 "$GITHUB_WORKSPACE/tools/apply-dsh-mobile.py" "$SRC" ""
+          fi
+          echo "ANDROID_SDK_ROOT=$ANDROID_HOME"; ls "$ANDROID_HOME/platforms"
 
       - name: Build installable debug APK
         run: |
