@@ -73,4 +73,24 @@ if 'applicationId "com.dshmobile.app"' not in final_bg:
 if force_sdk and (f"release({force_sdk})" not in final_bg or f"targetSdk {force_sdk}" not in final_bg):
     print(f"::error::SDK 未降级到 {force_sdk}"); sys.exit(5)
 
+# 5) 替换启动图标（若提供 ICONS_DIR）
+icons = os.environ.get("ICONS_DIR")
+if icons:
+    import shutil
+    res = src / "app/src/main/res"
+    src_icons = pathlib.Path(icons)
+    n = 0
+    for f in src_icons.rglob("*"):
+        if f.is_file():
+            dst = res / f.relative_to(src_icons)
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            dst.write_bytes(f.read_bytes()); n += 1
+    # 旧的 vector 前景会和新的 png 前景同名冲突，删掉
+    old_fg = res / "drawable/dsha_launcher_foreground.xml"
+    if old_fg.is_file():
+        old_fg.unlink()
+    if not (res / "mipmap-xxxhdpi/ic_launcher.png").is_file():
+        print("::error::图标未安装成功"); sys.exit(6)
+    changed.append(f"icons({n})")
+
 print("APPLIED:", changed, "| FORCE_SDK=", force_sdk or "(none)")

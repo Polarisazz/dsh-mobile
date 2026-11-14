@@ -46,6 +46,8 @@ jobs:
           ls "$ROOT" | head
 
       - name: Apply DSH Mobile customizations + bundle sync engine
+        env:
+          ICONS_DIR: ${{ github.workspace }}/icons
         run: |
           set -euo pipefail
           python3 "$GITHUB_WORKSPACE/tools/apply-dsh-mobile.py" "$SRC" "$GITHUB_WORKSPACE/sync/sync.mjs"
