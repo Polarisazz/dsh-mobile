@@ -39,8 +39,9 @@ if force_sdk:
         changed.append(f"sdk->{force_sdk}")
 bg.write_text(g, encoding="utf-8")
 
-# 3) 内置同步引擎
-if sync and sync.is_file():
+# 3) 内置同步引擎（默认不放进 assets，避免触发运行时资产清单校验失败）
+#    需要随包时设 BUNDLE_SYNC=1
+if os.environ.get("BUNDLE_SYNC") == "1" and sync and sync.is_file():
     dst = src / "app/src/main/assets/dsh-sync"
     dst.mkdir(parents=True, exist_ok=True)
     (dst / "sync.mjs").write_bytes(sync.read_bytes())
