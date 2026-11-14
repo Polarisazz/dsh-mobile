@@ -50,6 +50,14 @@ jobs:
           set -euo pipefail
           python3 "$GITHUB_WORKSPACE/tools/apply-dsh-mobile.py" "$SRC" "$GITHUB_WORKSPACE/sync/sync.mjs"
 
+      - name: Align managed descriptors with shipped inputs (per project recipe)
+        run: |
+          set -euo pipefail
+          cd "$SRC"
+          python3 tools/prepare-backup-assets.py --write || echo "::warning::prepare-backup-assets 跳过"
+          python3 tools/prepare-runtime-descriptor.py --write
+          python3 tools/prepare-test-runtime.py || echo "::warning::prepare-test-runtime 跳过"
+
       - name: Resolve toolchain versions (from the project itself)
         id: toolchain
         run: |
