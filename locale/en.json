@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "LAN task sync",
+    "description": "Bidirectionally sync DSH sessions/tasks between your desktop and phone over the LAN. Install on both ends, set each other's address and a shared token."
+  }
+}
