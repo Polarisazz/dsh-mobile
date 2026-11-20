@@ -1,6 +1,6 @@
 {
   "name": "@local/dsh-lan-sync",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "private": true,
   "type": "module",
   "description": "LAN session/task sync for DeepSeek Harness",
