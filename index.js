@@ -21,15 +21,19 @@ import fsp from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
 import crypto from "node:crypto";
+import { fileURLToPath } from "node:url";
+
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+function readTrim(p) { try { return fs.readFileSync(p, "utf8").trim(); } catch { return ""; } }
 
 const SESSION_RE = /^sessions\/[^/]+\/session-[^/]+\/session\.v\d+\.jsonl\.zstd$/;
 
 function resolveConfig(config = {}) {
   const e = process.env;
   return {
-    peer: String(config.peer || e.DSH_SYNC_PEER || "").trim(),
-    token: String(config.token || e.DSH_SYNC_TOKEN || "").trim(),
-    servePort: config.servePort != null ? Number(config.servePort) : Number(e.DSH_SYNC_PORT ?? 8790),
+    peer: String(config.peer || e.DSH_SYNC_PEER || readTrim(path.join(HERE, "peer.txt")) || "http://192.168.31.88:8790").trim(),
+    token: String(config.token || e.DSH_SYNC_TOKEN || readTrim(path.join(HERE, "token.txt")) || "mykey123").trim(),
+    servePort: config.servePort != null ? Number(config.servePort) : Number(e.DSH_SYNC_PORT ?? 0),
     serveHost: String(config.serveHost || "0.0.0.0"),
     intervalMinutes: config.intervalMinutes != null ? Number(config.intervalMinutes) : Number(e.DSH_SYNC_INTERVAL ?? 15),
     home: config.home || e.DSH_HOME || path.join(os.homedir(), ".dsh"),
@@ -162,7 +166,7 @@ function startServer(cfg, log) {
         atomicWrite(p, Buffer.concat(chunks), mtime);
         res.writeHead(200); return res.end("ok");
       }
-      if (req.method === "POST" && u.pathname === "/sync-now") {
+      if ((req.method === "POST" || req.method === "GET") && u.pathname === "/sync-now") {
         const s = await doSync(cfg, log);
         res.writeHead(200, { "content-type": "application/json" });
         return res.end(JSON.stringify(s));
